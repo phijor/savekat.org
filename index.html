@@ -10,17 +10,20 @@
     <style>
         body {
             font-family: 'Comic Neue', cursive;
+            background-color: #202020;
+            color: #E0E0E0;
         }
         body {
             margin: 0;
             display: flex;
             height: 100vh;
-            direction: column;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
         }
         img {
             height: 60vh;
+            z-index: 99;
         }
 
         .marquee {
@@ -29,9 +32,11 @@
             display: block;
             height: auto;
             min-height: 10vh;
+            width: 60vw;
+            padding: 30px;
         }
 
-        .marquee span {
+        .marquee-content {
             position: absolute;
             white-space: nowrap;
             width: 100%;
@@ -42,6 +47,10 @@
             transform: translateX(100%);
             animation: scroll-left 10s linear infinite;
         }
+        .text {
+            color: rgb(208, 64, 221);
+            font-style: italic;
+        }
 
         @keyframes scroll-left {
             0% {
@@ -51,15 +60,62 @@
                 transform: translateX(-100%);
             }
         }
+
+        .glitter-star {
+            position: absolute;
+            height: 16px;
+            width: 16px;
+            animation: glitter 1.5s linear 0s infinite normal;
+            z-index: -2;
+        }
+
+        @keyframes glitter {
+            0% {
+                -webkit-transform: scale(1.0);
+                opacity: 1;
+            }
+            25% {
+                -webkit-transform: scale(0.5);
+                opacity: 0;
+            }
+            50% {
+                -webkit-transform: scale(1.0);
+                opacity: 1;
+            }
+            75% {
+                -webkit-transform: scale(0.5);
+                opacity: 0;
+            }
+            100% {
+                -webkit-transform: scale(1.0);
+                opacity: 1;
+            }
+        }
     </style>
     <body>
-        <main>
-            <div>
-                <img src="savekat.jpg" alt="Cropped photo of a car window sticker reading 'savekat'">
-                <div class="marquee">
-                    <span>ꙮ🌸 From herself 🌸ꙮ</span>
-                </div>
-            </div>
-        </main>
+        <img class="pic" src="savekat.gif" alt="Cropped photo of a car window sticker reading 'savekat'">
+        <div class="marquee">
+            <span class="marquee-content">ꙮ🌸ꙮ🌸ꙮ🌸ꙮ🌸ꙮ🌸<span class="marquee-content"><span class="text">From herself</span></span></span>
+        </div>
     </body>
+    <script>
+        const randomPosition = () => {
+            return Math.random() * 98
+        }
+        const createStar = () => {
+            const delay = Math.random() + 's';
+            const el = document.createElement('img')
+            el.src                        = 'star.svg'
+            el.className                  = 'glitter-star'
+            el.style.top                  = randomPosition() + '%'
+            el.style.left                 = randomPosition() + '%'
+            el.style.animationDelay       = delay
+            el.style.msAnimationDelay     = delay
+            el.style.webkitAnimationDelay = delay
+            el.style.monAnimationDelay    = delay
+            document.body.appendChild(el)
+        }
+
+        [...Array(100)].forEach(createStar)
+    </script>
 </html>
